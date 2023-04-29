@@ -5,21 +5,23 @@ import {
     View,
     TouchableOpacity
 } from 'react-native';
-
 import { FontAwesome } from '@expo/vector-icons';
+// ==================================
+import NewRecipe from './src/NewRecipe';
+// ==================================
 
 export default function App() {
+    function handleNewRecipe() {
+        console.log('New Recipe');
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.top}>
                 <Text style={styles.title}>AI RECIPES</Text>
             </View>
 
-            <View style={styles.newRecipe}>
-                <TouchableOpacity>
-                    <FontAwesome name="plus" size={30} color="white" />
-                </TouchableOpacity>
-            </View>
+            <NewRecipe handleTouch={() => handleNewRecipe()} />
         </View>
     );
 }
@@ -46,19 +48,4 @@ const styles = StyleSheet.create({
         fontSize: 32,
         fontWeight: 'bold',
     },
-    // ==== newRecipe ===
-    newRecipe: {
-        position: 'absolute',
-        backgroundColor: '#00b4d8',
-
-        width:50,
-        height: 50,
-        right: 30,
-        bottom: 30,
-
-        alignItems: 'center',
-        justifyContent: 'center',
-
-        borderRadius: 50,
-    }
 });
