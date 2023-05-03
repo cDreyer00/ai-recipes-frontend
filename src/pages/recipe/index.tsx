@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-export default function Recipe(){
-    return(
+export default function Recipe() {
+    return (
         <View>
             <Text>Recipe infos</Text>
         </View>

@@ -25,7 +25,7 @@ export default function NewRecipe(props: NewRecipeProps) {
 const styles = StyleSheet.create({
     newRecipe: {
         position: 'absolute',
-        backgroundColor: '#00b4d8',
+        backgroundColor: '#F18805',
 
         width: 50,
         height: 50,

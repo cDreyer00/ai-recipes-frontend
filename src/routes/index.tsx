@@ -8,8 +8,16 @@ const Stack = createStackNavigator();
 export default function Route() {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="recipes" component={Home} />
-            <Stack.Screen name="recipe" component={Recipe} />
+            <Stack.Screen
+                name="recipes"
+                component={Home}
+                options={{ headerShown: false }}
+            />
+
+            <Stack.Screen
+                name="recipe"
+                component={Recipe}
+            />
         </Stack.Navigator>
     );
 }
