@@ -7,7 +7,7 @@ import {
     FlatList
 } from 'react-native';
 // ==================================
-import NewRecipe from '../../components/buttons/newRecipe';
+import ConfirmButton from '../../components/buttons/confirmButton';
 import RecipeCard, { RecipeData } from '../../components/buttons/recipeCard';
 // ==================================
 
@@ -106,7 +106,7 @@ export default function Home({ navigation }: any) {
                 )}
             />
 
-            <NewRecipe handleTouch={() => handleNewRecipe()} />
+            <ConfirmButton iconName={'plus'} handleTouch={() => handleNewRecipe()} />
         </View>
     );
 }

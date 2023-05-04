@@ -16,7 +16,18 @@ export default function Route() {
 
             <Stack.Screen
                 name="recipe"
-                component={Recipe}
+                component={Recipe}                
+                options={{
+                    title: "",
+                    headerTintColor: '#fff',
+                    // increase size
+                    headerStyle: {
+                        backgroundColor: '#191919',
+                        elevation: 0,
+                        shadowOpacity: 0,
+                        borderBottomWidth: 0,
+                    },                    
+                }}
             />
         </Stack.Navigator>
     );

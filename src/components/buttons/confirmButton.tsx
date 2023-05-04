@@ -8,15 +8,16 @@ import {
 import { FontAwesome } from '@expo/vector-icons';
 // ==================================
 
-type NewRecipeProps = {
+type ConfirmButtonProps = {
     handleTouch: () => void;
+    iconName: any;
 }
 
-export default function NewRecipe(props: NewRecipeProps) {
+export default function ConfirmButton(props: ConfirmButtonProps) {
     return (
         <View style={styles.newRecipe}>
             <TouchableOpacity>
-                <FontAwesome name="plus" size={30} color="white" onPress={props.handleTouch} />
+                <FontAwesome name={props.iconName} size={30} color="white" onPress={props.handleTouch} />
             </TouchableOpacity>
         </View>
     );
