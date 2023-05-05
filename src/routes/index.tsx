@@ -1,7 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Home from '../pages/home';
-import Recipe from '../pages/recipe';
+import Recipe from '../pages/new_recipe';
 
 const Stack = createStackNavigator();
 

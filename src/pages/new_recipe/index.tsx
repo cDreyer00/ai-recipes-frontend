@@ -7,18 +7,25 @@ import {
 
 import BaseInput from '../../components/inputs/baseInput';
 import ConfirmButton from '../../components/buttons/confirmButton';
+import ValueInput from '../../components/inputs/valueInput';
 
 export default function Recipe() {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>New Recipe</Text>
-            
-            <View style={styles.input}>
-                <BaseInput iconName="🍖" placeholder="cheese, milk, chicken..." />
+
+            <View style={styles.inputParent}>
+                <BaseInput icon="🍖" placeholder="cheese, milk, chicken..." />
+            </View>
+    
+            <View style={styles.rowInputValues}>
+                <ValueInput iconType='person' />
+                <ValueInput iconType='clock' />
+                <ValueInput iconType='kcal' />
             </View>
 
-            <View style={styles.input}>
-                <BaseInput useExpoIcons={true} iconName="blender" placeholder="cheese, milk, chicken..." />
+            <View style={styles.inputParent}>
+                <BaseInput useExpoIcons={true} icon="blender" placeholder="cheese, milk, chicken..." />
             </View>
 
             <ConfirmButton iconName="check" handleTouch={() => { }} />
@@ -37,7 +44,12 @@ const styles = StyleSheet.create({
         marginBottom: 50,
         textAlign: 'center',
     },
-    input: {
+    inputParent: {
+        marginBottom: 50,
+    },
+    rowInputValues:{
+        justifyContent: 'center',
+        flexDirection: 'row',
         marginBottom: 50,
     }
 })

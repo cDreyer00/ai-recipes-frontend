@@ -10,11 +10,11 @@ import { FontAwesome, MaterialCommunityIcons, } from '@expo/vector-icons';
 
 export type InputProps = {
     useExpoIcons?: boolean;
-    iconName?: any;
+    icon?: any;
     placeholder: string;
 }
 
-export default function BaseInput({ useExpoIcons = false, iconName, placeholder }: InputProps) {
+export default function BaseInput({ useExpoIcons = false, icon: iconName, placeholder }: InputProps) {
     return (
         <View style={styles.container}>
             {useExpoIcons ?
