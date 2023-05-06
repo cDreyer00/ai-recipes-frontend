@@ -5,6 +5,8 @@ import {
     StyleSheet,
     TextInput,
     Image,
+    Button,
+    Pressable
 } from "react-native";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 
@@ -15,48 +17,85 @@ type ValueInputProps = {
 type IconType = 'kcal' | 'clock' | 'person'
 
 export default function ValueInput({ iconType }: ValueInputProps) {
-    const icon = iconType === 'kcal' ?
-    <Image source={require('../../../assets/images/icons/kcal-white.png')} style={{ width: 30, height: 30 }} /> :
-    iconType === 'clock' ?
-    <Image source={require('../../../assets/images/icons/clock-white.png')} style={{ width: 30, height: 30 }} /> :
-    iconType === 'person' ?
-    <Image source={require('../../../assets/images/icons/person-white.png')} style={{ width: 30, height: 30 }} /> : null
+    const [enabled, setEnabled] = useState(false);
+
+    const styles = baseStyles(enabled);
+
+    const icon = (iconType: IconType) => {
+        switch (iconType) {
+            case 'kcal':
+                return require('../../../assets/images/icons/kcal-white.png')
+            case 'clock':
+                return require('../../../assets/images/icons/clock-white.png')
+            case 'person':
+                return require('../../../assets/images/icons/person-white.png')
+            default:
+                return null
+        }
+    }
+
+    function handlePointerDown() {
+        setEnabled(!enabled);
+    }
 
     return (
-        <View style={styles.container}>
-            {icon}
-            <TextInput
-                style={styles.input}
-                placeholder="0"
-                placeholderTextColor="rgba(255,255,255, 0.4)"
-                keyboardType="numeric"
-            />
-        </View>
+        <>
+            <Pressable onPress={handlePointerDown}>
+                <View style={styles.container}>
+
+                    <Image source={icon(iconType)} style={styles.icon} />
+
+                    <TextInput
+                        style={styles.input}
+                        placeholder="0"
+                        placeholderTextColor="rgba(255, 255, 255, 0.4)"
+                        keyboardType="numeric"
+                        editable={enabled}
+                    />
+
+                    {!enabled ? <View style={styles.disabledLine} /> : null}
+                </View>
+            </Pressable>
+        </>
     )
 }
 
-const styles = StyleSheet.create({
+const baseStyles = (enabled: Boolean) => StyleSheet.create({
     container: {
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
-        width: 100,
+        maxWidth: 120,
     },
     input: {
         fontSize: 14,
-        
+
         minWidth: 40,
-        maxWidth: 80,
+        maxWidth: 60,
         height: 40,
-        
+
         borderWidth: 3,
         borderRadius: 50,
-        
+
         color: '#FFF',
         borderColor: '#2E2E3A',
-        
+
         textAlign: 'center',
-        marginLeft: 10,
+        marginLeft: 5,
         paddingHorizontal: 10,
+    },
+    disabledLine: {
+        width: 100,
+        height: 3,
+        backgroundColor: '#5F5F5F',
+        marginRight: 5,
+        borderRadius: 50,
+        position: 'absolute',
+        zIndex: 1,
+    },
+    icon: {
+        width: 30,
+        height: 30,
+        tintColor: enabled ? 'rgba(255, 255, 255, 1)' : 'rgba(255, 255, 255, 0.4)'
     }
 })

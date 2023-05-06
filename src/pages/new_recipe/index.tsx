@@ -25,7 +25,7 @@ export default function Recipe() {
             </View>
 
             <View style={styles.inputParent}>
-                <BaseInput useExpoIcons={true} icon="blender" placeholder="cheese, milk, chicken..." />
+                <BaseInput useExpoIcons={true} icon="blender" placeholder="blender, microwave, oven..." />
             </View>
 
             <ConfirmButton iconName="check" handleTouch={() => { }} />
@@ -48,8 +48,10 @@ const styles = StyleSheet.create({
         marginBottom: 50,
     },
     rowInputValues:{
-        justifyContent: 'center',
         flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
         marginBottom: 50,
+        gap: 30,
     }
 })
