@@ -15,27 +15,34 @@ type ConfirmButtonProps = {
 
 export default function ConfirmButton(props: ConfirmButtonProps) {
     return (
-        <View style={styles.newRecipe}>
-            <TouchableOpacity>
-                <FontAwesome name={props.iconName} size={30} color="white" onPress={props.handleTouch} />
+        <View style={styles.container}>
+            <TouchableOpacity style={styles.button} onPress={props.handleTouch}>
+                <FontAwesome name={props.iconName} size={30} color="white" />
             </TouchableOpacity>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    newRecipe: {
+    container: {
         position: 'absolute',
-        backgroundColor: '#F18805',
 
-        width: 50,
-        height: 50,
+        width: 60,
+        height: 60,
         right: 30,
         bottom: 30,
 
         alignItems: 'center',
         justifyContent: 'center',
 
+    },
+    button: {
+        backgroundColor: '#F18805',
+        width: 60,
+        height: 60,
+        alignItems: 'center',
+        justifyContent: 'center',
         borderRadius: 50,
+
     }
 });

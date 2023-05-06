@@ -29,6 +29,7 @@ export default function ValueInput({ iconType }: ValueInputProps) {
                 style={styles.input}
                 placeholder="0"
                 placeholderTextColor="rgba(255,255,255, 0.4)"
+                keyboardType="numeric"
             />
         </View>
     )
@@ -43,13 +44,19 @@ const styles = StyleSheet.create({
     },
     input: {
         fontSize: 14,
-        color: '#FFF',
-        width: 40,
+        
+        minWidth: 40,
+        maxWidth: 80,
         height: 40,
-        borderColor: '#2E2E3A',
+        
         borderWidth: 3,
         borderRadius: 50,
+        
+        color: '#FFF',
+        borderColor: '#2E2E3A',
+        
         textAlign: 'center',
         marginLeft: 10,
+        paddingHorizontal: 10,
     }
 })
