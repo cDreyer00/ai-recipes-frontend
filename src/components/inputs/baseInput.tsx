@@ -14,32 +14,44 @@ export type InputProps = {
     icon?: any;
     placeholder: string;
     alwaysEnabled?: boolean,
+    handleAddButton: (itens: string[]) => void;
 }
 
-export default function BaseInput({ useExpoIcons = false, icon: iconName, placeholder, alwaysEnabled = false }: InputProps) {
+export default function BaseInput({ useExpoIcons = false, icon, handleAddButton, placeholder, alwaysEnabled = false }: InputProps) {
+    const [text, setText] = useState('');
     const [enabled, setEnabled] = useState(alwaysEnabled ? true : false);
     const styles = baseStyles(enabled);
 
     function handlePointerDown() {
         if (alwaysEnabled) return;
         setEnabled(!enabled);
-    }    
+    }
 
     return (
         <Pressable onPress={handlePointerDown}>
             <View style={styles.container}>
                 {useExpoIcons ?
-                    <MaterialCommunityIcons name={iconName} color="white" style={styles.icon} size={40} /> :
-                    <Text style={styles.icon}>{iconName}</Text>
+                    <MaterialCommunityIcons name={icon} color="white" style={styles.icon} size={40} /> :
+                    <Text style={styles.icon}>{icon}</Text>
                 }
                 <TextInput
                     style={styles.input}
                     placeholder={placeholder}
                     placeholderTextColor="rgba(255, 255, 255, 0.4)"
                     editable={enabled}
+                    onChangeText={setText}
+                    value={text}
                 />
 
-                <TouchableOpacity style={styles.add} disabled={!enabled}>
+                <TouchableOpacity
+                    style={styles.add}
+                    disabled={!enabled}
+                    onPress={() => {
+                        const itens = text.split(',').map(item => item.trim());
+                        handleAddButton(itens);
+                        setText('');
+                    }}
+                >
                     <FontAwesome name="plus" size={30} color="white" />
                 </TouchableOpacity>
 

@@ -10,14 +10,16 @@ import {
 } from "react-native";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 
+
+type IconType = 'kcal' | 'clock' | 'person'
+
 type ValueInputProps = {
+    onValueChange: (value: number) => void,
     iconType: IconType,
     alwaysEnabled?: boolean,
 }
 
-type IconType = 'kcal' | 'clock' | 'person'
-
-export default function ValueInput({ iconType, alwaysEnabled = false }: ValueInputProps) {
+export default function ValueInput({ iconType, alwaysEnabled = false, onValueChange }: ValueInputProps) {
     const [enabled, setEnabled] = useState(alwaysEnabled ? true : false);
 
     const styles = baseStyles(enabled);
@@ -53,7 +55,7 @@ export default function ValueInput({ iconType, alwaysEnabled = false }: ValueInp
                         placeholderTextColor="rgba(255, 255, 255, 0.4)"
                         keyboardType="numeric"
                         editable={enabled}
-
+                        onChangeText={(text) => { onValueChange(parseInt(text)) }}
                     />
 
                     {!enabled ? <View style={styles.disabledLine} /> : null}

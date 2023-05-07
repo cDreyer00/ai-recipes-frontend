@@ -20,11 +20,9 @@ export default function ConfirmButton(props: ConfirmButtonProps) {
     useEffect(() => {
         Keyboard.addListener('keyboardDidShow', () =>{
             setKeyboardIsOpen(true)
-            console.log('keyboardDidShow');
         } );
         Keyboard.addListener('keyboardDidHide', () => {
             setKeyboardIsOpen(false)
-            console.log('keyboardDidHide');
         });
 
         return () => {

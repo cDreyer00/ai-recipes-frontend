@@ -5,29 +5,24 @@ import {
     StyleSheet,
     TextInput,
     Image,
-    Button,
+    Pressable,
 } from "react-native";
 
 
-export default function ItensList() {
-    const [itens, setItens] = useState<string[]>([
-        'cheese',
-        'milk',
-        'chicken',
-        'potato',
-        'tomato',
-        'onion',
-        'garlic',
-    ])
+type ItensListProps = {
+    itens: string[];
+    onItemPress?: (item: string) => void;
+}
 
-
-
+export default function ItensList({ itens, onItemPress }: ItensListProps) {
     return (
         <View style={styles.container}>
             {itens.map((item, index) => (
-                <View key={index} style={styles.item}>
-                    <Text style={styles.text}>{item}</Text>
-                </View>
+                <Pressable key={index} onPress={() => onItemPress ? onItemPress(item) : null}>
+                    <View key={index} style={styles.item}>
+                        <Text style={styles.text}>{item}</Text>
+                    </View>
+                </Pressable>
             ))}
         </View>
     )
@@ -44,7 +39,6 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
     },
     item: {
-        maxWidth: 100,
         height: 30,
         backgroundColor: '#2E2E3A',
         alignItems: 'center',
