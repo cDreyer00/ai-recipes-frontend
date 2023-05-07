@@ -1,7 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Home from '../pages/home';
-import Recipe from '../pages/new_recipe';
+import RecipeRequest from '../pages/new_recipe';
 
 const Stack = createStackNavigator();
 
@@ -15,8 +15,8 @@ export default function Route() {
             />
 
             <Stack.Screen
-                name="recipe"
-                component={Recipe}                
+                name="recipe request"
+                component={RecipeRequest}                
                 options={{
                     title: "",
                     headerTintColor: '#fff',

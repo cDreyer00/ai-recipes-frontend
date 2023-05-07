@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     View,
     Text,
@@ -8,16 +8,29 @@ import {
 import BaseInput from '../../components/inputs/baseInput';
 import ConfirmButton from '../../components/buttons/confirmButton';
 import ValueInput from '../../components/inputs/valueInput';
+import ItensList from '../../components/others/itensList';
 
-export default function Recipe() {
+export default function RecipeRequest() {
+    const [itens, setItens] = useState<string[]>([])
+
+    function handleAddItem(item: string) {
+        setItens([...itens, item])
+    }
+
+    function onItemDeleted(item: string) {
+        setItens(itens.filter((value) => value !== item))
+    }
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>New Recipe</Text>
 
             <View style={styles.inputParent}>
-                <BaseInput icon="🍖" placeholder="cheese, milk, chicken..." />
+                <BaseInput icon="🍖" placeholder="cheese, milk, chicken..." alwaysEnabled={true} />
             </View>
-    
+
+            <ItensList />
+
             <View style={styles.rowInputValues}>
                 <ValueInput iconType='person' />
                 <ValueInput iconType='clock' />
@@ -45,9 +58,9 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     inputParent: {
-        marginBottom: 50,
+        marginBottom: 10,
     },
-    rowInputValues:{
+    rowInputValues: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',

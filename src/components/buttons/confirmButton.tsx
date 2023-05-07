@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     StyleSheet,
     Text,
     View,
-    TouchableOpacity
+    TouchableOpacity,
+    Keyboard,
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 // ==================================
@@ -14,17 +15,36 @@ type ConfirmButtonProps = {
 }
 
 export default function ConfirmButton(props: ConfirmButtonProps) {
+    const [KeyboardIsOpen, setKeyboardIsOpen] = useState(false);
+
+    useEffect(() => {
+        Keyboard.addListener('keyboardDidShow', () =>{
+            setKeyboardIsOpen(true)
+            console.log('keyboardDidShow');
+        } );
+        Keyboard.addListener('keyboardDidHide', () => {
+            setKeyboardIsOpen(false)
+            console.log('keyboardDidHide');
+        });
+
+        return () => {
+            Keyboard.removeAllListeners('keyboardDidShow');
+            Keyboard.removeAllListeners('keyboardDidHide');
+        }
+    });
+
     return (
-        <View style={styles.container}>
-            <TouchableOpacity style={styles.button} onPress={props.handleTouch}>
+        <View style={styles(KeyboardIsOpen).container}>
+            <TouchableOpacity style={styles(KeyboardIsOpen).button} onPress={props.handleTouch}>
                 <FontAwesome name={props.iconName} size={30} color="white" />
             </TouchableOpacity>
         </View>
     );
 }
 
-const styles = StyleSheet.create({
+const styles = (enabled: boolean) => StyleSheet.create({
     container: {
+        display: enabled ? 'none' : 'flex',
         position: 'absolute',
 
         width: 60,

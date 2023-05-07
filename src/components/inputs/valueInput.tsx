@@ -12,12 +12,13 @@ import { FontAwesome, Ionicons } from "@expo/vector-icons";
 
 type ValueInputProps = {
     iconType: IconType,
+    alwaysEnabled?: boolean,
 }
 
 type IconType = 'kcal' | 'clock' | 'person'
 
-export default function ValueInput({ iconType }: ValueInputProps) {
-    const [enabled, setEnabled] = useState(false);
+export default function ValueInput({ iconType, alwaysEnabled = false }: ValueInputProps) {
+    const [enabled, setEnabled] = useState(alwaysEnabled ? true : false);
 
     const styles = baseStyles(enabled);
 
@@ -35,6 +36,7 @@ export default function ValueInput({ iconType }: ValueInputProps) {
     }
 
     function handlePointerDown() {
+        if (alwaysEnabled) return;
         setEnabled(!enabled);
     }
 
@@ -51,6 +53,7 @@ export default function ValueInput({ iconType }: ValueInputProps) {
                         placeholderTextColor="rgba(255, 255, 255, 0.4)"
                         keyboardType="numeric"
                         editable={enabled}
+
                     />
 
                     {!enabled ? <View style={styles.disabledLine} /> : null}
@@ -83,6 +86,7 @@ const baseStyles = (enabled: Boolean) => StyleSheet.create({
         textAlign: 'center',
         marginLeft: 5,
         paddingHorizontal: 10,
+        opacity: enabled ? 1 : 0.4,
     },
     disabledLine: {
         width: 100,
@@ -96,6 +100,6 @@ const baseStyles = (enabled: Boolean) => StyleSheet.create({
     icon: {
         width: 30,
         height: 30,
-        tintColor: enabled ? 'rgba(255, 255, 255, 1)' : 'rgba(255, 255, 255, 0.4)'
+        opacity: enabled ? 1 : 0.4,
     }
 })

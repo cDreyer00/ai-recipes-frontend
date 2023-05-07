@@ -9,6 +9,7 @@ import {
 // ==================================
 import ConfirmButton from '../../components/buttons/confirmButton';
 import RecipeCard, { RecipeData } from '../../components/buttons/recipeCard';
+import { StackNavigationProp } from '@react-navigation/stack';
 // ==================================
 
 export default function Home({ navigation }: any) {
@@ -84,7 +85,7 @@ export default function Home({ navigation }: any) {
     }, []);
 
     function handleNewRecipe() {
-        navigation.navigate('recipe');
+        navigation.navigate('recipe request');
     }
 
     return (
