@@ -80,9 +80,9 @@ export default function RecipeRequest() {
             <ItensList itens={ingridients} onItemPress={handleDeleteIngridient} />
 
             <View style={styles.rowInputValues}>
-                <ValueInput iconType='person' onValueChange={setServes} />
-                <ValueInput iconType='clock' onValueChange={setTime} />
-                <ValueInput iconType='kcal' onValueChange={setKcal} />
+                <ValueInput iconType='person' onValueChange={setServes} value={serves} />
+                <ValueInput iconType='clock' onValueChange={setTime} value={time} />
+                <ValueInput iconType='kcal' onValueChange={setKcal} value={kcal} />
             </View>
 
             <View style={styles.inputParent}>
@@ -104,6 +104,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#191919',
+        paddingHorizontal: 20,
     },
     title: {
         fontSize: 32,

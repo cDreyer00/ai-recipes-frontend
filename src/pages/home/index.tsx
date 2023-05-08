@@ -4,42 +4,44 @@ import {
     Text,
     View,
     TouchableOpacity,
-    FlatList
+    FlatList,
 } from 'react-native';
 // ==================================
 import ConfirmButton from '../../components/buttons/confirmButton';
 import RecipeCard, { RecipeData } from '../../components/buttons/recipeCard';
-import { StackNavigationProp } from '@react-navigation/stack';
 // ==================================
 
 export default function Home({ navigation }: any) {
+
     const [recipes, setRecipes] = useState<RecipeData[]>([
         {
-            title: 'Bolo de cenoura',
-            desciption: 'Bolo de cenoura com cobertura de chocolate',
-            time: 60,
+            title: 'Avocado and cheese breakfast toast',
+            desciption: 'A quick and easy breakfast toast that combines creamy avocado and melted cheese on top of crispy bread.',
+            time: 20,
             kcal: 300,
-            emoji: '🥕',
-            serves: 8,
+            emoji: '🥑',
+            serves: 1,
             ingredients: [
-                '3 cenouras médias raspadas e picadas',
-                '4 ovos',
-                '1 xícara de óleo',
-                '2 xícaras de açúcar',
-                '2 xícaras de farinha de trigo',
-                '1 colher de sopa de fermento em pó'
+                '1 slice of bread',
+                '1/2 avocado',
+                '1 slice of cheese',
+                '1 egg',
+                'Salt',
+                'Pepper',
+                'Oregano'
             ],
-            tools: [
-                'Liquidificador',
-                'Forma',
-                'Forno'
+            utensils: [
+                'Toaster',
+                'Frying pan'
             ],
             steps: [
-                'Em um liquidificador, adicione as cenouras, os ovos e o óleo, depois misture.',
-                'Acrescente o açúcar e bata novamente por 5 minutos.',
-                'Em uma tigela ou na batedeira, adicione a farinha de trigo e depois misture novamente.',
-                'Acrescente o fermento e misture lentamente com uma colher.',
-                'Asse em um forno preaquecido a 180° C por aproximadamente 40 minutos.'
+                'Toast the bread.',
+                'Cut the avocado in half and remove the pit.',
+                'Scoop out the avocado flesh and mash it with a fork.',
+                'Spread the mashed avocado on the toast.',
+                'Place the cheese slice on top of the avocado.',
+                'Fry the egg and place it on top of the cheese.',
+                'Season with salt, pepper and oregano.'
             ]
         },
         {
@@ -64,7 +66,7 @@ export default function Home({ navigation }: any) {
                 '1 colher de sopa de salsinha picada',
                 '1 colher de sopa de cebolinha picada'
             ],
-            tools: [
+            utensils: [
                 'Tigela',
                 'Frigideira',
                 'Forno'
@@ -81,11 +83,12 @@ export default function Home({ navigation }: any) {
         },
     ]);
 
-    useEffect(() => {
-    }, []);
-
     function handleNewRecipe() {
         navigation.navigate('recipe request');
+    }
+
+    function handleRecipePressed(recipe: RecipeData) {
+        navigation.navigate('recipe', { recipe });
     }
 
     return (
@@ -103,11 +106,11 @@ export default function Home({ navigation }: any) {
                 numColumns={2}
 
                 renderItem={({ item }) => (
-                    <RecipeCard recipe={item} />
+                    <RecipeCard recipe={item} handleRecipePressed={handleRecipePressed} />
                 )}
             />
 
-            <ConfirmButton iconName={'plus'} handleTouch={() => handleNewRecipe()} />
+            <ConfirmButton iconName={'plus'} handleTouch={handleNewRecipe} disabledByKeyboard={false} />
         </View>
     );
 }

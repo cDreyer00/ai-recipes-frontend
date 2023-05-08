@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     StyleSheet,
     Text,
@@ -12,20 +12,24 @@ import { FontAwesome } from '@expo/vector-icons';
 type ConfirmButtonProps = {
     handleTouch: () => void;
     iconName: any;
+    disabledByKeyboard?: boolean | true;
 }
 
 export default function ConfirmButton(props: ConfirmButtonProps) {
     const [KeyboardIsOpen, setKeyboardIsOpen] = useState(false);
 
     useEffect(() => {
-        Keyboard.addListener('keyboardDidShow', () =>{
+        if (!props.disabledByKeyboard) return;
+
+        Keyboard.addListener('keyboardDidShow', () => {
             setKeyboardIsOpen(true)
-        } );
+        });
         Keyboard.addListener('keyboardDidHide', () => {
             setKeyboardIsOpen(false)
         });
 
         return () => {
+            console.log(props.iconName);
             Keyboard.removeAllListeners('keyboardDidShow');
             Keyboard.removeAllListeners('keyboardDidHide');
         }

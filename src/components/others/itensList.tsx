@@ -30,12 +30,9 @@ export default function ItensList({ itens, onItemPress }: ItensListProps) {
 
 const styles = StyleSheet.create({
     container: {
-        width: '90%',
-        maxWidth: '90%',
+        width: '100%',
         flexDirection: 'row',
-        justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 50,
         flexWrap: 'wrap',
     },
     item: {
@@ -44,8 +41,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 40,
-        marginLeft: 10,
-        marginBottom: 10,
+        marginRight: 5,
+        marginBottom: 8,
     },
     text: {
         marginHorizontal: 15,

@@ -5,8 +5,9 @@ import {
     StyleSheet,
     TouchableOpacity
 } from 'react-native';
-
 import { Ionicons } from '@expo/vector-icons';
+// import route
+import { useNavigation } from '@react-navigation/native';
 
 export type RecipeData = {
     title: string,
@@ -16,20 +17,22 @@ export type RecipeData = {
     emoji: string,
     serves: number,
     ingredients: string[],
-    tools: string[],
+    utensils: string[],
     steps: string[]
 }
 
 export type RecipeCardProps = {
     recipe: RecipeData;
+    handleRecipePressed: (recipe: RecipeData) => void;
 }
 
-export default function RecipeCard({ recipe }: RecipeCardProps) {
+// , { recipe, handleRecipePressed }: RecipeCardProps
+export default function RecipeCard({ recipe, handleRecipePressed }: RecipeCardProps) {
     return (
         <View style={styles.container}>
-            <TouchableOpacity onPress={() => { }}>
+            <TouchableOpacity onPress={() => handleRecipePressed(recipe)}>
                 <Text style={styles.emoji}>{recipe.emoji}</Text>
-                <Text style={styles.title}>{recipe.title}</Text>
+                <Text style={styles.title} numberOfLines={2}>{recipe.title}</Text>
                 <View style={styles.downInfos}>
                     <View style={styles.servesParent}>
                         <Text style={styles.servesText}>{recipe.serves}</Text>
@@ -56,31 +59,29 @@ const styles = StyleSheet.create({
         borderRadius: 40,
         paddingHorizontal: 15,
     },
-    // === top infos ===
+    // TOP
     emoji: {
         fontSize: 40,
         color: '#FFF',
-        marginTop: 20,
+        marginVertical: 20,
         right: 0,
     },
     title: {
-        fontSize: 20,
+        fontSize: 18,
         color: '#FFF',
-        marginTop: 10,
+        height: 50,
+        marginBottom: 35,
     },
+    // DOWN 
     downInfos: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginTop: 60,
-        paddingHorizontal: 8,
     },
     // === serves ===
     servesParent: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 10,
-        bottom: 0,
     },
     servesText: {
         fontSize: 20,
@@ -91,7 +92,6 @@ const styles = StyleSheet.create({
     timeParent: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 10,
     },
     timeText: {
         fontSize: 20,

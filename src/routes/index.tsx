@@ -2,6 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Home from '../pages/home';
 import RecipeRequest from '../pages/new_recipe';
+import Recipe from '../pages/recipe';
 
 const Stack = createStackNavigator();
 
@@ -16,7 +17,7 @@ export default function Route() {
 
             <Stack.Screen
                 name="recipe request"
-                component={RecipeRequest}                
+                component={RecipeRequest}
                 options={{
                     title: "",
                     headerTintColor: '#fff',
@@ -26,9 +27,26 @@ export default function Route() {
                         elevation: 0,
                         shadowOpacity: 0,
                         borderBottomWidth: 0,
-                    },                    
+                    },
                 }}
             />
+
+            <Stack.Screen
+                name="recipe"
+                component={Recipe}
+                options={{
+                    title: "",
+                    headerTintColor: '#fff',
+                    // increase size
+                    headerStyle: {
+                        backgroundColor: '#191919',
+                        elevation: 0,
+                        shadowOpacity: 0,
+                        borderBottomWidth: 0,
+                    },
+                }}
+            />
+
         </Stack.Navigator>
     );
 }

@@ -14,12 +14,14 @@ import { FontAwesome, Ionicons } from "@expo/vector-icons";
 type IconType = 'kcal' | 'clock' | 'person'
 
 type ValueInputProps = {
-    onValueChange: (value: number) => void,
+    onValueChange?: (value: number) => void,
+    value?: number,
     iconType: IconType,
     alwaysEnabled?: boolean,
+    editable?: boolean
 }
 
-export default function ValueInput({ iconType, alwaysEnabled = false, onValueChange }: ValueInputProps) {
+export default function ValueInput({ iconType, alwaysEnabled = false, onValueChange, value, editable = true}: ValueInputProps) {
     const [enabled, setEnabled] = useState(alwaysEnabled ? true : false);
 
     const styles = baseStyles(enabled);
@@ -54,8 +56,9 @@ export default function ValueInput({ iconType, alwaysEnabled = false, onValueCha
                         placeholder="0"
                         placeholderTextColor="rgba(255, 255, 255, 0.4)"
                         keyboardType="numeric"
-                        editable={enabled}
-                        onChangeText={(text) => { onValueChange(parseInt(text)) }}
+                        editable={enabled && editable}
+                        value={value ? String(value) : ''}
+                        onChangeText={(text) => { if (onValueChange) onValueChange(Number(text)) }}                        
                     />
 
                     {!enabled ? <View style={styles.disabledLine} /> : null}
