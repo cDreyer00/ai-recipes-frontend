@@ -5,12 +5,16 @@ import {
     StyleSheet
 } from 'react-native';
 
+import axios from 'axios';
+
 import BaseInput from '../../components/inputs/baseInput';
 import ConfirmButton from '../../components/buttons/confirmButton';
 import ValueInput from '../../components/inputs/valueInput';
 import ItensList from '../../components/others/itensList';
 
-export default function RecipeRequest() {
+import { RecipeData } from '../../components/buttons/recipeCard';
+
+export default function RecipeRequest({ navigation }: any) {
     const [ingridients, setIngridients] = useState<string[]>([])
     const [utensils, setUtensils] = useState<string[]>([])
     const [serves, setServes] = useState<number>(0)
@@ -52,15 +56,25 @@ export default function RecipeRequest() {
     }
 
     function handleConfirm() {
-        console.log('Ingridients => ', ingridients)
-        console.log('\n')
-        console.log('Utensils => ', utensils)
-        console.log('\n')
-        console.log('Serves => ', serves)
-        console.log('\n')
-        console.log('Time => ', time)
-        console.log('\n')
-        console.log('Kcal => ', kcal)
+        const data = {
+            emoji: '🍖',
+            ingridients,
+            utensils,
+            serves,
+            time,
+            kcal,
+            language: 'en'
+        }
+        console.log('Data:', data);
+
+        axios.post('https://a313-2804-2a4c-1082-3f32-a140-e66b-1035-5381.ngrok-free.app/recipe', data)
+            .then((response) => {
+                const recipe = response.data as RecipeData;
+                console.log(recipe);
+                navigation.navigate('recipe', { recipe });
+            }).catch((error) => {
+                console.log(error);
+            })
     }
 
 

@@ -16,7 +16,7 @@ export default function Home({ navigation }: any) {
     const [recipes, setRecipes] = useState<RecipeData[]>([
         {
             title: 'Avocado and cheese breakfast toast',
-            desciption: 'A quick and easy breakfast toast that combines creamy avocado and melted cheese on top of crispy bread.',
+            description: 'A quick and easy breakfast toast that combines creamy avocado and melted cheese on top of crispy bread.',
             time: 20,
             kcal: 300,
             emoji: '🥑',
@@ -40,13 +40,13 @@ export default function Home({ navigation }: any) {
                 'Scoop out the avocado flesh and mash it with a fork.',
                 'Spread the mashed avocado on the toast.',
                 'Place the cheese slice on top of the avocado.',
-                'Fry the egg and place it on top of the cheese.',
+                'Fry the egg and place it on top of the cheese. Fry the egg and place it on top of the cheese.',
                 'Season with salt, pepper and oregano.'
             ]
         },
         {
             title: 'Almôndegas',
-            desciption: 'Almôndegas com molho de tomate',
+            description: 'Almôndegas com molho de tomate',
             time: 60,
             kcal: 800,
             serves: 4,

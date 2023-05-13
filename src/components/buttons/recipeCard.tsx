@@ -11,7 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 
 export type RecipeData = {
     title: string,
-    desciption: string,
+    description: string,
     time: number,
     kcal: number,
     emoji: string,
@@ -26,7 +26,6 @@ export type RecipeCardProps = {
     handleRecipePressed: (recipe: RecipeData) => void;
 }
 
-// , { recipe, handleRecipePressed }: RecipeCardProps
 export default function RecipeCard({ recipe, handleRecipePressed }: RecipeCardProps) {
     return (
         <View style={styles.container}>
