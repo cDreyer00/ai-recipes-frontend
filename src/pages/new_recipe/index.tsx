@@ -7,6 +7,7 @@ import {
 // ========================================================================================================================
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useRoute } from '@react-navigation/native';
 // ========================================================================================================================
 import BaseInput from '../../components/inputs/baseInput';
 import ConfirmButton from '../../components/buttons/confirmButton';
@@ -21,6 +22,10 @@ export default function RecipeRequest({ navigation }: any) {
     const [serves, setServes] = useState<number>(0)
     const [time, setTime] = useState<number>(0)
     const [kcal, setKcal] = useState<number>(0)
+
+    const route = useRoute();
+    const allRecipes = route.params!.recipes as RecipeData[];
+    console.log('All recipes:', allRecipes);
 
     async function handleAddIngridients(itens: string[]) {
         if (itens.length === 0) return;
@@ -58,7 +63,6 @@ export default function RecipeRequest({ navigation }: any) {
 
     function handleConfirm() {
         const data = {
-            emoji: '🍖',
             ingridients,
             utensils,
             serves,
@@ -68,17 +72,11 @@ export default function RecipeRequest({ navigation }: any) {
         }
         console.log('Data:', data);
 
-        axios.post('https://f957-2804-2a4c-1082-3f32-5463-88a5-db6e-17c0.ngrok-free.app/recipe', data)
+        const baseUrl = 'https://435f-2804-2a4c-1082-3f32-585-45d0-c66-305b.ngrok-free.app'
+        axios.get(`${baseUrl}/test`)
             .then(async (response) => {
                 const recipe = response.data as RecipeData;
-
-                const recipes = await AsyncStorage.getItem('@recipes');
-                if (recipes) {
-                    await AsyncStorage.setItem('@recipes', JSON.stringify([...recipes, recipe]));
-                } else {
-                    await AsyncStorage.setItem('@recipes', JSON.stringify([recipe]));
-                }
-
+                await AsyncStorage.setItem('@recipes', JSON.stringify([...allRecipes, recipe]));
                 navigation.navigate('recipe', { recipe });
             }).catch((error) => {
                 console.log(error);

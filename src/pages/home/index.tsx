@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import {
     StyleSheet,
     Text,
@@ -15,18 +16,21 @@ import RecipeCard, { RecipeData } from '../../components/buttons/recipeCard';
 export default function Home({ navigation }: any) {
     const [recipes, setRecipes] = useState<RecipeData[]>([]);
 
-    useEffect(() => {
-        async function getRecipes() {
-            const recipes = await AsyncStorage.getItem('@recipes');
-            if (recipes) {
-                setRecipes(JSON.parse(recipes));
+    useFocusEffect(
+        React.useCallback(() => {
+            async function getStorage() {
+                const recipes = await AsyncStorage.getItem('@recipes');
+                if (recipes) {
+                    setRecipes(JSON.parse(recipes));
+                }
             }
-        }
-        getRecipes();
-    }, [])
+
+            getStorage();
+        }, [])
+    );
 
     function handleNewRecipe() {
-        navigation.navigate('recipe request');
+        navigation.navigate('recipe request', { recipes });
     }
 
     function handleRecipePressed(recipe: RecipeData) {
@@ -91,3 +95,29 @@ const styles = StyleSheet.create({
         color: '#FFF',
     },
 });
+
+
+
+const recipeTemplate: RecipeData = {
+    title: 'Chicken Avocado Salad',
+    description: 'A refreshing and nutritious salad made with tender chicken, creamy avocado, juicy tomatoes, and melted cheese.',
+    time: 30,
+    serves: 2,
+    kcal: 350,
+    ingredients: [
+        '2 chicken breasts, grilled and sliced',
+        '1 avocado, diced',
+        '1 tomato, diced',
+        '1/2 onion, thinly sliced',
+        '1/2 cup shredded cheese',
+        'Salt and pepper to taste'
+    ],
+    utensils: ['Grill pan', 'Mixing bowl', 'Knife'],
+    steps: [
+        'Season the chicken breasts with salt and pepper. Grill them on a grill pan until cooked through. Slice the chicken breasts into thin strips.',
+        'In a mixing bowl, combine the diced avocado, tomato, and onion. Season with salt and pepper to taste.',
+        'Add the sliced chicken to the mixing bowl and toss everything together.',
+        'Sprinkle the shredded cheese on top of the salad and serve.'
+    ],
+    emoji: '🥗'
+}
