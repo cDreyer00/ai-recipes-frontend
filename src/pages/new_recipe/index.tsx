@@ -4,14 +4,15 @@ import {
     Text,
     StyleSheet
 } from 'react-native';
-
+// ========================================================================================================================
 import axios from 'axios';
-
+import AsyncStorage from '@react-native-async-storage/async-storage'
+// ========================================================================================================================
 import BaseInput from '../../components/inputs/baseInput';
 import ConfirmButton from '../../components/buttons/confirmButton';
 import ValueInput from '../../components/inputs/valueInput';
 import ItensList from '../../components/others/itensList';
-
+// ========================================================================================================================
 import { RecipeData } from '../../components/buttons/recipeCard';
 
 export default function RecipeRequest({ navigation }: any) {
@@ -21,7 +22,7 @@ export default function RecipeRequest({ navigation }: any) {
     const [time, setTime] = useState<number>(0)
     const [kcal, setKcal] = useState<number>(0)
 
-    async function handleAddIngridient(itens: string[]) {
+    async function handleAddIngridients(itens: string[]) {
         if (itens.length === 0) return;
         for (let i = 0; i < itens.length; i++) {
             const item = itens[i];
@@ -67,10 +68,17 @@ export default function RecipeRequest({ navigation }: any) {
         }
         console.log('Data:', data);
 
-        axios.post('https://a313-2804-2a4c-1082-3f32-a140-e66b-1035-5381.ngrok-free.app/recipe', data)
-            .then((response) => {
+        axios.post('https://f957-2804-2a4c-1082-3f32-5463-88a5-db6e-17c0.ngrok-free.app/recipe', data)
+            .then(async (response) => {
                 const recipe = response.data as RecipeData;
-                console.log(recipe);
+
+                const recipes = await AsyncStorage.getItem('@recipes');
+                if (recipes) {
+                    await AsyncStorage.setItem('@recipes', JSON.stringify([...recipes, recipe]));
+                } else {
+                    await AsyncStorage.setItem('@recipes', JSON.stringify([recipe]));
+                }
+
                 navigation.navigate('recipe', { recipe });
             }).catch((error) => {
                 console.log(error);
@@ -87,7 +95,7 @@ export default function RecipeRequest({ navigation }: any) {
                     icon="🍖"
                     placeholder="cheese, milk, chicken..."
                     alwaysEnabled={true}
-                    handleAddButton={handleAddIngridient}
+                    handleAddButton={handleAddIngridients}
                 />
             </View>
 

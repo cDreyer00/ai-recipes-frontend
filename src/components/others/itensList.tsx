@@ -15,8 +15,6 @@ type ItensListProps = {
 }
 
 export default function ItensList({ itens, onItemPress }: ItensListProps) {
-    console.log('ITENS LIST');
-    console.log(itens);
     return (
         <View style={styles.container}>
             {itens.map((item, index) => (

@@ -136,8 +136,9 @@ const styles = StyleSheet.create({
         marginBottom: 30,
     },
     step: {
-        height: 80,
-        padding: 20,
+        minHeight: 80,
+        paddingHorizontal: 20,
+        paddingVertical: 10,
         backgroundColor: '#2E2E3A',
         flexDirection: 'row',
         alignItems: 'center',
