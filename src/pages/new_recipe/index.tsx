@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import {
     View,
     Text,
-    StyleSheet
+    StyleSheet,
+    ToastAndroid
 } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -23,6 +24,7 @@ export default function RecipeRequest({ navigation }: any) {
     const [kcal, setKcal] = useState<number>(0)
 
     const [loading, setLoading] = useState<boolean>(false)
+    const [fail, setFail] = useState<boolean>(false);
 
     const route = useRoute();
     const allRecipes = route.params!.recipes as RecipeData[];
@@ -62,9 +64,9 @@ export default function RecipeRequest({ navigation }: any) {
     }
 
     async function handleConfirm() {
-        if(loading) return;
-        
+        if (loading) return;
         setLoading(true)
+        setFail(false);
 
         const data = {
             ingridients,
@@ -74,7 +76,7 @@ export default function RecipeRequest({ navigation }: any) {
             kcal,
             language: 'en'
         }
-        const baseUrl = 'https://435f-2804-2a4c-1082-3f32-585-45d0-c66-305b.ngrok-free.app'
+        const baseUrl = 'https://feb3-2804-2a4c-1082-3f32-f10a-5c43-6821-12b4.ngrok-free.app'
         await axios.get(`${baseUrl}/test`)
             .then(async (response) => {
                 const recipe = response.data as RecipeData;
@@ -82,6 +84,7 @@ export default function RecipeRequest({ navigation }: any) {
                 navigation.navigate('recipe', { recipe });
             }).catch((error) => {
                 console.log(error);
+                setFail(true);
             })
 
         setLoading(false)
@@ -119,6 +122,13 @@ export default function RecipeRequest({ navigation }: any) {
 
             <AsyncFloatingButton iconName="check" handleTouch={handleConfirm} />
             <ItensList itens={utensils} onItemPress={handleDeleteUtensil} />
+
+            {fail ?
+                <View style={styles.fail}>
+                    <Text style={styles.failText}>The request failed</Text>
+                </View>
+                : null
+            }
         </View>
     )
 }
@@ -144,5 +154,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 50,
         gap: 30,
+    },
+    fail: {
+        marginTop: 20,
+        width: '50%',
+        alignSelf: 'center',
+        backgroundColor: '#FF0000',
+        padding: 10,
+        borderRadius: 40,
+    },
+    failText: {
+        textAlign: 'center',
+        color: '#FFF',
+        fontSize: 16,
     }
 })

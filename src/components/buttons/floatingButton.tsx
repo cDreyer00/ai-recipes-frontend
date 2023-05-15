@@ -13,19 +13,17 @@ import { FontAwesome } from '@expo/vector-icons';
 type FloatingButtonProps = {
     handleTouch: () => Promise<void>;
     iconName: any;
-    disabledByKeyboard?: boolean | true;
+    disabledByKeyboard?: boolean;
 }
 
-export default function AsyncFloatingButton({ handleTouch, iconName, disabledByKeyboard }: FloatingButtonProps) {
+export default function AsyncFloatingButton({ handleTouch, iconName, disabledByKeyboard = true }: FloatingButtonProps) {
     const [KeyboardIsOpen, setKeyboardIsOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
     async function onTouch() {
-        console.log('started');
         setLoading(true);
         await handleTouch();
         setLoading(false);
-        console.log('finished');
     }
 
     useEffect(() => {
