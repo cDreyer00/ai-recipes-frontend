@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // ==================================
-import ConfirmButton from '../../components/buttons/confirmButton';
+import AsyncFloatingButton from '../../components/buttons/floatingButton';
 import RecipeCard, { RecipeData } from '../../components/buttons/recipeCard';
 // ==================================
 
@@ -29,8 +29,8 @@ export default function Home({ navigation }: any) {
         }, [])
     );
 
-    function handleNewRecipe() {
-        navigation.navigate('recipe request', { recipes });
+    async function handleNewRecipe() {
+        await navigation.navigate('recipe request', { recipes });
     }
 
     function handleRecipePressed(recipe: RecipeData) {
@@ -56,7 +56,7 @@ export default function Home({ navigation }: any) {
                 )}
             />
 
-            <ConfirmButton iconName={'plus'} handleTouch={handleNewRecipe} disabledByKeyboard={false} />
+            <AsyncFloatingButton iconName={'plus'} handleTouch={handleNewRecipe} disabledByKeyboard={false} />
         </View>
     );
 }

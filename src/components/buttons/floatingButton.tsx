@@ -5,21 +5,31 @@ import {
     View,
     TouchableOpacity,
     Keyboard,
+    ActivityIndicator,
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 // ==================================
 
-type ConfirmButtonProps = {
-    handleTouch: () => void;
+type FloatingButtonProps = {
+    handleTouch: () => Promise<void>;
     iconName: any;
     disabledByKeyboard?: boolean | true;
 }
 
-export default function ConfirmButton(props: ConfirmButtonProps) {
+export default function AsyncFloatingButton({ handleTouch, iconName, disabledByKeyboard }: FloatingButtonProps) {
     const [KeyboardIsOpen, setKeyboardIsOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    async function onTouch() {
+        console.log('started');
+        setLoading(true);
+        await handleTouch();
+        setLoading(false);
+        console.log('finished');
+    }
 
     useEffect(() => {
-        if (!props.disabledByKeyboard) return;
+        if (!disabledByKeyboard) return;
 
         Keyboard.addListener('keyboardDidShow', () => {
             setKeyboardIsOpen(true)
@@ -29,7 +39,6 @@ export default function ConfirmButton(props: ConfirmButtonProps) {
         });
 
         return () => {
-            console.log(props.iconName);
             Keyboard.removeAllListeners('keyboardDidShow');
             Keyboard.removeAllListeners('keyboardDidHide');
         }
@@ -37,8 +46,11 @@ export default function ConfirmButton(props: ConfirmButtonProps) {
 
     return (
         <View style={styles(KeyboardIsOpen).container}>
-            <TouchableOpacity style={styles(KeyboardIsOpen).button} onPress={props.handleTouch}>
-                <FontAwesome name={props.iconName} size={30} color="white" />
+            <TouchableOpacity style={styles(KeyboardIsOpen).button} onPress={onTouch}>
+                {loading ?
+                    <ActivityIndicator size={35} color="#fff" /> :
+                    <FontAwesome name={iconName} size={30} color="white" />
+                }
             </TouchableOpacity>
         </View>
     );
@@ -56,7 +68,6 @@ const styles = (enabled: boolean) => StyleSheet.create({
 
         alignItems: 'center',
         justifyContent: 'center',
-
     },
     button: {
         backgroundColor: '#F18805',

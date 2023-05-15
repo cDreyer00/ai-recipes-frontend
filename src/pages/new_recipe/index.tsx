@@ -4,13 +4,12 @@ import {
     Text,
     StyleSheet
 } from 'react-native';
-// ========================================================================================================================
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useRoute } from '@react-navigation/native';
 // ========================================================================================================================
 import BaseInput from '../../components/inputs/baseInput';
-import ConfirmButton from '../../components/buttons/confirmButton';
+import AsyncFloatingButton from '../../components/buttons/floatingButton';
 import ValueInput from '../../components/inputs/valueInput';
 import ItensList from '../../components/others/itensList';
 // ========================================================================================================================
@@ -23,9 +22,10 @@ export default function RecipeRequest({ navigation }: any) {
     const [time, setTime] = useState<number>(0)
     const [kcal, setKcal] = useState<number>(0)
 
+    const [loading, setLoading] = useState<boolean>(false)
+
     const route = useRoute();
     const allRecipes = route.params!.recipes as RecipeData[];
-    console.log('All recipes:', allRecipes);
 
     async function handleAddIngridients(itens: string[]) {
         if (itens.length === 0) return;
@@ -61,7 +61,11 @@ export default function RecipeRequest({ navigation }: any) {
         setUtensils(utensils.filter((value) => value !== item))
     }
 
-    function handleConfirm() {
+    async function handleConfirm() {
+        if(loading) return;
+        
+        setLoading(true)
+
         const data = {
             ingridients,
             utensils,
@@ -70,10 +74,8 @@ export default function RecipeRequest({ navigation }: any) {
             kcal,
             language: 'en'
         }
-        console.log('Data:', data);
-
         const baseUrl = 'https://435f-2804-2a4c-1082-3f32-585-45d0-c66-305b.ngrok-free.app'
-        axios.get(`${baseUrl}/test`)
+        await axios.get(`${baseUrl}/test`)
             .then(async (response) => {
                 const recipe = response.data as RecipeData;
                 await AsyncStorage.setItem('@recipes', JSON.stringify([...allRecipes, recipe]));
@@ -81,13 +83,14 @@ export default function RecipeRequest({ navigation }: any) {
             }).catch((error) => {
                 console.log(error);
             })
+
+        setLoading(false)
     }
 
 
     return (
         <View style={styles.container}>
             <Text style={styles.title}>New Recipe</Text>
-
             <View style={styles.inputParent}>
                 <BaseInput
                     icon="🍖"
@@ -114,7 +117,7 @@ export default function RecipeRequest({ navigation }: any) {
                 />
             </View>
 
-            <ConfirmButton iconName="check" handleTouch={handleConfirm} />
+            <AsyncFloatingButton iconName="check" handleTouch={handleConfirm} />
             <ItensList itens={utensils} onItemPress={handleDeleteUtensil} />
         </View>
     )
