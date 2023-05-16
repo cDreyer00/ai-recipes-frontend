@@ -3,7 +3,7 @@ import {
     View,
     Text,
     StyleSheet,
-    ToastAndroid
+    ScrollView,
 } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -76,8 +76,8 @@ export default function RecipeRequest({ navigation }: any) {
             kcal,
             language: 'en'
         }
-        const baseUrl = 'https://feb3-2804-2a4c-1082-3f32-f10a-5c43-6821-12b4.ngrok-free.app'
-        await axios.get(`${baseUrl}/test`)
+        const baseUrl = 'https://68a1-2804-2a4c-1082-3f32-f10a-5c43-6821-12b4.ngrok-free.app'
+        await axios.post(`${baseUrl}/recipe`, data)
             .then(async (response) => {
                 const recipe = response.data as RecipeData;
                 await AsyncStorage.setItem('@recipes', JSON.stringify([...allRecipes, recipe]));

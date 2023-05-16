@@ -66,6 +66,7 @@ const styles = (enabled: boolean) => StyleSheet.create({
 
         alignItems: 'center',
         justifyContent: 'center',
+        zIndex: 999,
     },
     button: {
         backgroundColor: '#F18805',
@@ -74,6 +75,5 @@ const styles = (enabled: boolean) => StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 50,
-
     }
 });

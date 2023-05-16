@@ -4,8 +4,7 @@ import {
     Text,
     View,
     TouchableOpacity,
-    FlatList,
-    ScrollView
+    ScrollView,
 } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useRoute } from '@react-navigation/native';

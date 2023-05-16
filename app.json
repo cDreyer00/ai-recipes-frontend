@@ -18,13 +18,20 @@
       "supportsTablet": true
     },
     "android": {
+      "buildType": "apk",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.cdreyer.iarecipes"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b34e1c73-7fc2-4a06-9b34-6cecc9277e5c"
+      }
     }
   }
 }
