@@ -6,6 +6,7 @@ import {
     View,
     TouchableOpacity,
     FlatList,
+    TextInput,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // ==================================
@@ -26,6 +27,8 @@ export default function Home({ navigation }: any) {
             }
 
             getStorage();
+
+            // AsyncStorage.removeItem('@recipes');
         }, [])
     );
 
@@ -55,6 +58,7 @@ export default function Home({ navigation }: any) {
                     <RecipeCard recipe={item} handleRecipePressed={handleRecipePressed} />
                 )}
             />
+
 
             <AsyncFloatingButton iconName={'plus'} handleTouch={handleNewRecipe} disabledByKeyboard={false} />
         </View>
@@ -98,26 +102,26 @@ const styles = StyleSheet.create({
 
 
 
-const recipeTemplate: RecipeData = {
-    title: 'Chicken Avocado Salad',
-    description: 'A refreshing and nutritious salad made with tender chicken, creamy avocado, juicy tomatoes, and melted cheese.',
-    time: 30,
-    serves: 2,
-    kcal: 350,
-    ingredients: [
-        '2 chicken breasts, grilled and sliced',
-        '1 avocado, diced',
-        '1 tomato, diced',
-        '1/2 onion, thinly sliced',
-        '1/2 cup shredded cheese',
-        'Salt and pepper to taste'
-    ],
-    utensils: ['Grill pan', 'Mixing bowl', 'Knife'],
-    steps: [
-        'Season the chicken breasts with salt and pepper. Grill them on a grill pan until cooked through. Slice the chicken breasts into thin strips.',
-        'In a mixing bowl, combine the diced avocado, tomato, and onion. Season with salt and pepper to taste.',
-        'Add the sliced chicken to the mixing bowl and toss everything together.',
-        'Sprinkle the shredded cheese on top of the salad and serve.'
-    ],
-    emoji: '🥗'
-}
+// const recipeTemplate: RecipeData = {
+//     title: 'Chicken Avocado Salad',
+//     description: 'A refreshing and nutritious salad made with tender chicken, creamy avocado, juicy tomatoes, and melted cheese.',
+//     time: 30,
+//     serves: 2,
+//     kcal: 350,
+//     ingredients: [
+//         '2 chicken breasts, grilled and sliced',
+//         '1 avocado, diced',
+//         '1 tomato, diced',
+//         '1/2 onion, thinly sliced',
+//         '1/2 cup shredded cheese',
+//         'Salt and pepper to taste'
+//     ],
+//     utensils: ['Grill pan', 'Mixing bowl', 'Knife'],
+//     steps: [
+//         'Season the chicken breasts with salt and pepper. Grill them on a grill pan until cooked through. Slice the chicken breasts into thin strips.',
+//         'In a mixing bowl, combine the diced avocado, tomato, and onion. Season with salt and pepper to taste.',
+//         'Add the sliced chicken to the mixing bowl and toss everything together.',
+//         'Sprinkle the shredded cheese on top of the salad and serve.'
+//     ],
+//     emoji: '🥗'
+// }

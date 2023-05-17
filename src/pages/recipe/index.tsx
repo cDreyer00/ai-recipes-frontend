@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useRoute } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // ==================================
 import { RecipeData } from '../../components/buttons/recipeCard';
 import ValueInput from '../../components/inputs/valueInput';
@@ -15,7 +16,7 @@ import ItensList from '../../components/others/itensList';
 // ==================================
 
 // recipe: RecipeData
-export default function Recipe({ nagivation }: any) {
+export default function Recipe({ navigation }: any) {
     const [stepCheck, setStepCheck] = useState<boolean[]>([]);
 
     useEffect(() => {
@@ -24,12 +25,33 @@ export default function Recipe({ nagivation }: any) {
             newStepCheck.push(false);
         }
         setStepCheck(newStepCheck);
+
+        navigation.setOptions({
+            headerRight: () => (
+                <TouchableOpacity style={{ marginRight: 20 }} onPress={handleDeleteRecipe}>
+                    <FontAwesome5 name="trash" size={30} color="white" />
+                </TouchableOpacity>
+            ),
+        })
     }, []);
 
     function handleRecipeCheck(index: number) {
         const newStepCheck = [...stepCheck];
         newStepCheck[index] = !newStepCheck[index];
         setStepCheck(newStepCheck);
+    }
+
+    function handleDeleteRecipe() {
+        AsyncStorage.getItem('@recipes').then((data) => {
+            if (!data) return;
+
+            const recipes = JSON.parse(data);
+            const newRecipes = recipes.filter((recipe: RecipeData) => recipe.title !== title);
+
+            AsyncStorage.setItem('@recipes', JSON.stringify(newRecipes)).then(() => {
+                navigation.goBack();
+            });
+        });
     }
 
     const route = useRoute();
@@ -91,7 +113,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginBottom: 15
     },
+    deleteButton: {
+        position: 'absolute',
+        right: 40,
+    },
     title: {
+        maxWidth: 200,
         fontSize: 22,
         color: '#FFF',
     },

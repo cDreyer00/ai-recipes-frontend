@@ -4,6 +4,7 @@ import {
     Text,
     StyleSheet,
     ScrollView,
+    TextInput
 } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -16,12 +17,22 @@ import ItensList from '../../components/others/itensList';
 // ========================================================================================================================
 import { RecipeData } from '../../components/buttons/recipeCard';
 
+type RecipeRequestProps = {
+    ingridients: string[],
+    utensils?: string[],
+    serves?: number,
+    time?: number,
+    kcal?: number,
+    language?: string,
+}
+
 export default function RecipeRequest({ navigation }: any) {
     const [ingridients, setIngridients] = useState<string[]>([])
     const [utensils, setUtensils] = useState<string[]>([])
     const [serves, setServes] = useState<number>(0)
     const [time, setTime] = useState<number>(0)
     const [kcal, setKcal] = useState<number>(0)
+    const [language, setLanguage] = useState<string>('en')
 
     const [loading, setLoading] = useState<boolean>(false)
     const [fail, setFail] = useState<boolean>(false);
@@ -68,18 +79,34 @@ export default function RecipeRequest({ navigation }: any) {
         setLoading(true)
         setFail(false);
 
-        const data = {
+        if (ingridients.length === 0) {
+            setLoading(false)
+            return alert('You need to add at least one ingridient')
+        }
+
+        const data: RecipeRequestProps = {
             ingridients,
             utensils,
             serves,
             time,
             kcal,
-            language: 'en'
+            language,
         }
-        const baseUrl = 'https://68a1-2804-2a4c-1082-3f32-f10a-5c43-6821-12b4.ngrok-free.app'
+
+        const baseUrl = 'https://6320-2804-2a4c-1082-4b7e-f4be-2ca-3634-cddb.ngrok-free.app'
         await axios.post(`${baseUrl}/recipe`, data)
             .then(async (response) => {
-                const recipe = response.data as RecipeData;
+                const recipe = {
+                    title: response.data.title,
+                    ingredients: response.data.ingredients,
+                    utensils: response.data.utensils,
+                    serves: response.data.serves,
+                    time: response.data.time,
+                    kcal: response.data.calories,
+                    steps: response.data.steps,
+                    emoji: response.data.emoji,
+                } as RecipeData;
+
                 await AsyncStorage.setItem('@recipes', JSON.stringify([...allRecipes, recipe]));
                 navigation.navigate('recipe', { recipe });
             }).catch((error) => {
@@ -122,6 +149,15 @@ export default function RecipeRequest({ navigation }: any) {
 
             <AsyncFloatingButton iconName="check" handleTouch={handleConfirm} />
             <ItensList itens={utensils} onItemPress={handleDeleteUtensil} />
+
+            <TextInput
+                style={styles.languageInput}
+                placeholder='en'
+                placeholderTextColor="rgba(255, 255, 255, 0.4)"
+                editable={true}
+                onChangeText={setLanguage}
+                value={language}
+            />
 
             {fail ?
                 <View style={styles.fail}>
@@ -167,5 +203,16 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: '#FFF',
         fontSize: 16,
-    }
+    },
+    languageInput: {
+        marginTop: 20,
+        width: 100,
+        height: 40,
+        borderColor: '#FFF',
+        borderWidth: 1,
+        borderRadius: 40,
+        paddingHorizontal: 20,
+        fontSize: 18,
+        color: '#FFF',
+    },
 })

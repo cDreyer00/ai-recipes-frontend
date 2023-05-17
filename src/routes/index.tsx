@@ -1,3 +1,6 @@
+import React from 'react';
+import { TouchableOpacity } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Home from '../pages/home';
@@ -44,6 +47,7 @@ export default function Route() {
                         shadowOpacity: 0,
                         borderBottomWidth: 0,
                     },
+
                 }}
             />
 
