@@ -38,7 +38,7 @@ export default function RecipeRequest({ navigation }: any) {
     const [fail, setFail] = useState<boolean>(false);
 
     const route = useRoute();
-    const allRecipes = route.params!.recipes as RecipeData[];
+    let allRecipes = route.params!.recipes as RecipeData[];
 
     async function handleAddIngridients(itens: string[]) {
         if (itens.length === 0) return;
@@ -93,11 +93,12 @@ export default function RecipeRequest({ navigation }: any) {
             language,
         }
 
-        const baseUrl = 'https://6320-2804-2a4c-1082-4b7e-f4be-2ca-3634-cddb.ngrok-free.app'
+        const baseUrl = 'https://2c98-2804-2a4c-1082-4b7e-5140-cabb-4c6f-38fb.ngrok-free.app'
         await axios.post(`${baseUrl}/recipe`, data)
             .then(async (response) => {
                 const recipe = {
                     title: response.data.title,
+                    description: response.data.description,
                     ingredients: response.data.ingredients,
                     utensils: response.data.utensils,
                     serves: response.data.serves,
@@ -106,8 +107,9 @@ export default function RecipeRequest({ navigation }: any) {
                     steps: response.data.steps,
                     emoji: response.data.emoji,
                 } as RecipeData;
-
-                await AsyncStorage.setItem('@recipes', JSON.stringify([...allRecipes, recipe]));
+                
+                allRecipes.push(recipe);
+                await AsyncStorage.setItem('@recipes', JSON.stringify(allRecipes));
                 navigation.navigate('recipe', { recipe });
             }).catch((error) => {
                 console.log(error);

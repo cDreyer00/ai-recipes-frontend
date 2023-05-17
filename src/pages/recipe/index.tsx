@@ -61,7 +61,7 @@ export default function Recipe({ navigation }: any) {
         <ScrollView style={styles.container}>
             <View style={styles.top}>
                 <Text style={styles.title}>{title}</Text>
-                <Text style={styles.emoji}>{emoji}</Text>
+                <Text style={styles.emoji} numberOfLines={1}>{emoji}</Text>
             </View>
 
             <Text style={styles.description}>{description}</Text>
@@ -103,19 +103,17 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#191919',
-        paddingHorizontal: 40,
+        paddingHorizontal: 35,
     },
     // TOP
     top: {
+        alignSelf: 'center',
         maxWidth: '90%',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: 15
-    },
-    deleteButton: {
-        position: 'absolute',
-        right: 40,
+        gap: 20,
+        marginBottom: 30,
     },
     title: {
         maxWidth: 200,
@@ -124,9 +122,9 @@ const styles = StyleSheet.create({
     },
     emoji: {
         width: 75,
-        height: 100,
-        fontSize: 50,
-        textAlign: 'right',
+        height: 75,
+        fontSize: 40,
+        textAlign: 'center',
         textAlignVertical: 'center',
     },
     description: {

@@ -30,7 +30,7 @@ export default function RecipeCard({ recipe, handleRecipePressed }: RecipeCardPr
     return (
         <View style={styles.container}>
             <TouchableOpacity onPress={() => handleRecipePressed(recipe)}>
-                <Text style={styles.emoji}>{recipe.emoji}</Text>
+                <Text style={styles.emoji} numberOfLines={1}>{recipe.emoji}</Text>
                 <Text style={styles.title} numberOfLines={2}>{recipe.title}</Text>
                 <View style={styles.downInfos}>
                     <View style={styles.servesParent}>
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     },
     // TOP
     emoji: {
-        fontSize: 40,
+        fontSize: 35,
         color: '#FFF',
         marginVertical: 20,
         right: 0,
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#FFF',
         height: 50,
-        marginBottom: 35,
+        marginBottom: 40,
     },
     // DOWN 
     downInfos: {
