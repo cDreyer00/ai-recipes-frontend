@@ -30,22 +30,23 @@ export default function ItensList({ itens, onItemPress }: ItensListProps) {
 
 const styles = StyleSheet.create({
     container: {
-        width: '100%',
+        width: '100%',        
         flexDirection: 'row',
         alignItems: 'center',
         flexWrap: 'wrap',
     },
     item: {
-        height: 30,
+        minHeight: 30,
         backgroundColor: '#2E2E3A',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 40,
+        borderRadius: 30,
         marginRight: 5,
         marginBottom: 8,
     },
     text: {
-        marginHorizontal: 15,
+        paddingVertical: 5,
+        paddingHorizontal: 15,
         color: '#FFF',
     }
 })

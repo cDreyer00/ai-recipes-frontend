@@ -93,8 +93,7 @@ export default function RecipeRequest({ navigation }: any) {
             language,
         }
 
-        // const baseUrl = 'https://airecipes-backend.onrender.com'
-        const baseUrl = 'https://dac2-2804-2a4c-1082-4b7e-2d58-6186-3e95-51b9.ngrok-free.app'
+        const baseUrl = 'https://airecipes-backend.onrender.com'
         await axios.post(`${baseUrl}/recipe`, data)
             .then(async (response) => {
                 const recipe = {

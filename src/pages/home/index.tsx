@@ -15,14 +15,46 @@ import RecipeCard, { RecipeData } from '../../components/buttons/recipeCard';
 // ==================================
 
 export default function Home({ navigation }: any) {
-    const [recipes, setRecipes] = useState<RecipeData[]>([]);
+    const [recipes, setRecipes] = useState<RecipeData[]>([
+        {
+            title: 'potato',
+            description: 'a large potato to cook with spaghetti a large potato to cook with spaghetti a large potato to cook with spaghetti a large potato to cook with spaghetti',
+            time: 9999,
+            kcal: 99999,
+            emoji: '🍗',
+            serves: 120,
+            ingredients: [
+                "a large potato to cook with spaghetti a large potato to cook with spaghetti a large potato to cook with spaghetti a large potato to cook with spaghetti",
+                "a large potato to cook with spaghetti a large potato to cook with spaghetti a large potato to cook with spaghetti a",
+                "a large potato to cook with spaghetti a large potato to cook with spaghetti a",
+                "a large potato to cook with spaghetti a",
+                "a large potato",
+                "a",
+            ],
+            utensils: [
+                "a large potato to cook with spaghetti a large potato to cook with spaghetti a large potato to cook with spaghetti a large potato to cook with spaghetti",
+                "a large potato to cook with spaghetti a large potato to cook with spaghetti a large potato to cook with spaghetti a",
+                "a large potato to cook with spaghetti a large potato to cook with spaghetti a",
+                "a large potato to cook with spaghetti a",
+                "a large potato",
+                "a",
+            ],
+            steps: [
+                "a large potato to cook with spaghetti a large potato to cook with spaghetti a large potato to cook with spaghetti a",
+                "a large potato to cook with spaghetti a large potato to cook with spaghetti a",
+                "a large potato to cook with spaghetti a",
+                "a large potato",
+                "a",
+            ]
+        }
+    ]);
 
     useFocusEffect(
         React.useCallback(() => {
             async function getStorage() {
                 const recipes = await AsyncStorage.getItem('@recipes');
                 if (recipes) {
-                    setRecipes(JSON.parse(recipes));
+                    // setRecipes(JSON.parse(recipes));
                 }
             }
 
